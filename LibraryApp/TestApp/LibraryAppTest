@@ -1,0 +1,74 @@
+package TestApp;
+import library.Book;
+import library.Library;
+
+import java.util.List;
+
+public class TestLibraryApp {
+    public static void main(String[] args) {
+        // Tworzenie biblioteki
+        Library library = new Library();
+
+        // Dodawanie przykładowych książek
+        Book book1 = new Book("Java: The Complete Reference", "Herbert Schildt", 2019, "9781260440232", true);
+        Book book2 = new Book("Clean Code: A Handbook of Agile Software Craftsmanship", "Robert C. Martin", 2008, "9780132350884", true);
+        Book book3 = new Book("Design Patterns: Elements of Reusable Object-Oriented Software", "Erich Gamma", 1994, "9780201633610", true);
+
+        library.addBook(book1);
+        library.addBook(book2);
+        library.addBook(book3);
+
+        // Wyświetlanie książek w bibliotece
+        System.out.println("Książki w bibliotece:");
+        List<Book> booksInLibrary = library.getBooks();
+        for (Book book : booksInLibrary) {
+            System.out.println(book.getTitle() + " by " + book.getAuthor());
+        }
+
+        // Wyszukiwanie książek po tytule
+        System.out.println("\nWyszukiwanie książek po tytule:");
+        String searchTitle = "Java";
+        List<Book> booksByTitle = library.searchBooksByTitle(searchTitle);
+        if (!booksByTitle.isEmpty()) {
+            System.out.println("Znalezione książki o tytule \"" + searchTitle + "\":");
+            for (Book book : booksByTitle) {
+                System.out.println(book.getTitle() + " by " + book.getAuthor());
+            }
+        } else {
+            System.out.println("Nie znaleziono książek o tytule \"" + searchTitle + "\"");
+        }
+
+        // Wyszukiwanie książek po autorze
+        System.out.println("\nWyszukiwanie książek po autorze:");
+        String searchAuthor = "Robert C. Martin";
+        List<Book> booksByAuthor = library.searchBooksByAuthor(searchAuthor);
+        if (!booksByAuthor.isEmpty()) {
+            System.out.println("Znalezione książki autorstwa " + searchAuthor + ":");
+            for (Book book : booksByAuthor) {
+                System.out.println(book.getTitle() + " by " + book.getAuthor());
+            }
+        } else {
+            System.out.println("Nie znaleziono książek autorstwa " + searchAuthor);
+        }
+
+        // Wypożyczanie książki
+        System.out.println("\nWypożyczanie książki:");
+        String borrowISBN = "9780132350884";
+        boolean borrowSuccess = library.borrowBook(borrowISBN);
+        if (borrowSuccess) {
+            System.out.println("Książka o numerze ISBN " + borrowISBN + " została wypożyczona.");
+        } else {
+            System.out.println("Nie udało się wypożyczyć książki o numerze ISBN " + borrowISBN);
+        }
+
+        // Zwracanie książki
+        System.out.println("\nZwracanie książki:");
+        String returnISBN = "9780132350884";
+        boolean returnSuccess = library.returnBook(returnISBN);
+        if (returnSuccess) {
+            System.out.println("Książka o numerze ISBN " + returnISBN + " została zwrócona.");
+        } else {
+            System.out.println("Nie udało się zwrócić książki o numerze ISBN " + returnISBN);
+        }
+    }
+}
